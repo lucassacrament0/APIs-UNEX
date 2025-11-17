@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rick And Morty Thrones</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <h1>Rick And Morty Thrones</h1>
+        <p>Duas APIs: Game of Thrones e Rick and Morty.</p>
+    </header>
+
+    <main>
+        <section class="api-section card" id="got-card">
+            <h2>Game of Thrones API</h2>
+            <p>Clique no botão para buscar um personagem aleatório.</p>
+            <button id="fetch-character">Buscar Personagem (GoT)!</button>
+            <div id="got-result" class="api-result"></div>
+        </section>
+
+        <section class="api-section card" id="rickmorty-card">
+            <h2>The Rick and Morty API</h2>
+            <p>Clique no botão para buscar um personagem aleatório.</p>
+            <button id="fetch-rickmorty">Buscar Personagem (R&M)!</button>
+            <div id="rickmorty-result" class="api-result"></div>
+        </section>
+    </main>
+
+    <script>
+        const gotButton = document.getElementById('fetch-character');
+        const gotResultDiv = document.getElementById('got-result');
+
+        const rickMortyButton = document.getElementById('fetch-rickmorty');
+        const rickMortyResultDiv = document.getElementById('rickmorty-result');
+
+        async function fetchGotCharacter() {
+            gotResultDiv.innerHTML = '';
+            gotButton.disabled = true;
+
+            try {
+                const randomId = Math.floor(Math.random() * 2138) + 1;
+                const response = await fetch(`https://anapioficeandfire.com/api/characters/${randomId}`);
+                
+                if (!response.ok) {
+                    throw new Error(`Erro na API: ${response.statusText}`);
+                }
+                const data = await response.json();
+                displayGotCharacter(data);
+
+            } catch (error) {
+                console.error('Falha ao buscar personagem de GoT:', error);
+                gotResultDiv.innerHTML = `<p class="error">Não foi possível buscar o personagem. Tente novamente.</p>`;
+            } finally {
+                gotButton.disabled = false;
+            }
+        }
+
+        async function fetchRickMortyCharacter() {
+            rickMortyResultDiv.innerHTML = '';
+            rickMortyButton.disabled = true;
+
+            try {
+                const randomId = Math.floor(Math.random() * 826) + 1;
+                const response = await fetch(`https://rickandmortyapi.com/api/character/${randomId}`);
+                
+                if (!response.ok) {
+                    throw new Error(`Erro na API: ${response.statusText}`);
+                }
+                const data = await response.json();
+                displayRickMortyCharacter(data);
+
+            } catch (error) {
+                console.error('Falha ao buscar Post:', error);
+                rickMortyResultDiv.innerHTML = `<p class="error">Não foi possível buscar o personagem. Tente novamente.</p>`;
+            } finally {
+                rickMortyButton.disabled = false;
+            }
+        }
+
+        function displayGotCharacter(character) {
+            gotResultDiv.innerHTML = '';
+            const name = document.createElement('h3');
+            name.textContent = character.name || "Personagem Desconhecido";
+
+            const culture = document.createElement('p');
+            culture.textContent = character.culture ? `Cultura: ${character.culture}` : "Cultura: Desconhecida";
+
+            const playedBy = document.createElement('p');
+            playedBy.textContent = character.playedBy[0] ? `Ator: ${character.playedBy[0]}` : "";
+
+            gotResultDiv.appendChild(name);
+            gotResultDiv.appendChild(culture);
+            gotResultDiv.appendChild(playedBy);
+        }
+
+        function displayRickMortyCharacter(character) {
+            rickMortyResultDiv.innerHTML = '';
+            const name = document.createElement('h3');
+            name.textContent = character.name;
+
+            const image = document.createElement('img');
+            image.src = character.image;
+            image.alt = character.name;
+
+            const status = document.createElement('p');
+            status.textContent = `Status: ${character.status} (${character.species})`;
+            
+            rickMortyResultDiv.appendChild(image);
+            rickMortyResultDiv.appendChild(name);
+            rickMortyResultDiv.appendChild(status);
+        }
+
+        gotButton.addEventListener('click', fetchGotCharacter);
+        rickMortyButton.addEventListener('click', fetchRickMortyCharacter);
+    </script>
+</body>
+</html>
