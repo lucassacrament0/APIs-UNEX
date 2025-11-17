@@ -36,7 +36,7 @@ Este projeto foi construído para demonstrar o consumo de APIs REST de terceiros
 - O CSS é estruturado com o princípio Mobile First (layout de coluna única como padrão, com media query para telas maiores).
 
 # Dados Acadêmicos
-Alunos: Emerson L S Lima e Levi F O Baptista
-Docente: Ramon M Paixão
-Curso: Sistemas de Informação
-Instituição: Centro Universitário de Excelência (UNEX)
+Alunos: Emerson L S Lima e Levi F O Baptista;
+Docente: Ramon P Muricy;
+Curso: Sistemas de Informação;
+Instituição: Centro Universitário de Excelência (UNEX);
