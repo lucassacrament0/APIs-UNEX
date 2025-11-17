@@ -1,5 +1,5 @@
 {
-  "name": "RickAndMortyThronesAPI",
+  "name": "rickandmortythronesapi",
   "version": "1.0.0",
   "description": "Duas APIs: Rick and Morty e Game of Thrones.",
   "main": "server.js",
